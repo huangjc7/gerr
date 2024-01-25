@@ -11,15 +11,17 @@ type Error struct {
 	wg         sync.WaitGroup
 	callback   ErrorHandleFunc
 	shouldWait bool
-	once       sync.Once // 用于确保通道只被关闭一次
+	once       sync.Once // Used to ensure that the channel is only closed once
 
 }
 
 func New(callback ErrorHandleFunc, shouldWait bool) *Error {
+	// When shouldWait is true, waitGroup will be used to facilitate the scenario where the goroutine has not completed execution when the function exits.
+	// When shouldWait is false, waitGroup will not be used to continue receiving errors from the error channel.
+	// Note: When shouldWait is false, there is no need to call the Close method
 	return &Error{
-		errCh:    make(chan error),
-		callback: callback,
-		// 错误处理
+		errCh:      make(chan error),
+		callback:   callback,
 		shouldWait: shouldWait,
 	}
 }
