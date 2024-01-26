@@ -26,6 +26,7 @@ func main() {
 	g.Receive()
 
 	err := fmt.Errorf("this is an error")
+        // You can capture error information anywhere in your code
 	g.CatchError(err)
 	g.Close()
 }
@@ -48,6 +49,7 @@ func main() {
 
 	err := fmt.Errorf("this is an error")
 	for {
+                // You can capture error information anywhere in your code
 		g.CatchError(err)
 	}
 }
