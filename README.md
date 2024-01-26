@@ -1,7 +1,7 @@
 # Gerr
 An error handling library that makes code simpler<br>
 catches errors explicitly<br>
-Goodbye err != nil
+Goodbye `err != nil`
 
 # Install
 ```go
