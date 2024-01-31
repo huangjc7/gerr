@@ -1,6 +1,7 @@
 package gerr
 
 import (
+	"log"
 	"sync"
 )
 
@@ -15,18 +16,18 @@ type Error struct {
 
 }
 
-func New(callback ErrorHandleFunc, shouldWait bool) *Error {
+func New(shouldWait bool) *Error {
 	// When shouldWait is true, waitGroup will be used to facilitate the scenario where the goroutine has not completed execution when the function exits.
 	// When shouldWait is false, waitGroup will not be used to continue receiving errors from the error channel.
 	// Note: When shouldWait is false, there is no need to call the Close method
 	return &Error{
 		errCh:      make(chan error),
-		callback:   callback,
 		shouldWait: shouldWait,
 	}
 }
 
-func (e *Error) CatchError(err error) {
+func (e *Error) CatchError(processFunc ErrorHandleFunc, err error) {
+	e.callback = processFunc
 	if err != nil {
 		e.errCh <- err
 	}
@@ -43,8 +44,10 @@ func (e *Error) Receive() {
 		}
 
 		for err := range e.errCh {
-			if e.callback != nil {
+			if err != nil && e.callback != nil {
 				e.callback(err)
+			} else {
+				log.Println(err)
 			}
 		}
 	}()
