@@ -26,11 +26,13 @@ func New(shouldWait bool) *Error {
 	}
 }
 
-func (e *Error) CatchError(processFunc ErrorHandleFunc, err error) {
+func (e *Error) CatchError(processFunc ErrorHandleFunc, err error) bool {
 	e.callback = processFunc
 	if err != nil {
 		e.errCh <- err
+		return true
 	}
+	return false
 }
 
 func (e *Error) Receive() {
