@@ -43,7 +43,7 @@ func main() {
 	// When shouldWait is false, waitGroup will not be used to continue receiving errors from the error channel.
 	// Note: When shouldWait is false, there is no need to call the Close method
 
-	g := gerr.New(customErrorHandler, true)
+	g := gerr.New(customErrorHandler, false)
 	// Start goroutine to receive error messages
 	g.Receive()
 
