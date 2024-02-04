@@ -88,7 +88,6 @@ func main() {
 ```
 
 3. Recommended example<br>
-
    Very simple to use, no if != nil in the code
 
 ```go
