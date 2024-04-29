@@ -26,7 +26,7 @@ func New(shouldWait bool) *Error {
 	}
 }
 
-func (e *Error) CatchError(processFunc ErrorHandleFunc, err error) bool {
+func (e *Error) CatchErr(processFunc ErrorHandleFunc, err error) bool {
 	e.callback = processFunc
 	if err != nil {
 		e.errCh <- err

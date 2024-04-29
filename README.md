@@ -37,8 +37,8 @@ func main() {
 	err2 := errors.New("this is an error 2")
 
 	// Use LogProcessFunc to handle errors
-	g.CatchError(fmtProcessFunc, err1)
-	g.CatchError(logProcessFunc, err2)
+	g.CatchErr(fmtProcessFunc, err1)
+	g.CatchErr(logProcessFunc, err2)
 
 	g.Close()
 }
@@ -73,8 +73,8 @@ func main() {
 
 	for {
 		// Use LogProcessFunc to handle errors
-		g.CatchError(fmtProcessFunc, err1)
-		g.CatchError(logProcessFunc, err2)
+		g.CatchErr(fmtProcessFunc, err1)
+		g.CatchErr(logProcessFunc, err2)
 	}
 }
 ```
@@ -108,8 +108,8 @@ func (b *BusinessLogic) PerformOperation() {
     // Here we simulate some operations that may produce errors
     err := errors.New("operation error")
     // Catch errors and if there are any, use the specified callback function for handling
-    b.errorHandler.CatchError(b.LogProcessFunc, err)
-    b.errorHandler.CatchError(b.FmtProcessFunc, err)
+    b.errorHandler.CatchErr(b.LogProcessFunc, err)
+    b.errorHandler.CatchErr(b.FmtProcessFunc, err)
 }
 
 func main() {
